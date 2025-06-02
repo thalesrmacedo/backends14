@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat IA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Chat IA</h1>
+  <textarea id="mensagem" placeholder="Digite sua pergunta..."></textarea><br>
+  <button onclick="enviar()">Enviar</button>
+  <p><strong>Resposta:</strong> <span id="resposta"></span></p>
+
+  <script>
+    async function enviar() {
+      const msg = document.getElementById('mensagem').value;
+
+      const response = await fetch('http://localhost:3000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg })
+      });
+
+      const data = await response.json();
+      document.getElementById('resposta').textContent = data.reply;
+    }
+  </script>
+</body>
+</html>
